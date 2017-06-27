@@ -1,6 +1,6 @@
 # simple-dialogs
 
-https://fobo4ka.github.io/sheet-test/
+https://fobo4ka.github.io/simple-dialogs/
 
 Мобильная версия, вид диалогов, поле ввода сообщения всегда должно быть прибито к низу страницы, а история сообщений бесконечно прокручиваться снизу вверх.
 
