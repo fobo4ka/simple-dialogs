@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="style.css">
+        <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+        <link rel="shortcut icon" type="image/gif" href="https://vk.com/images/icons/favicons/fav_im_2x.ico?5">
+        <title>Диалоги</title>
+
+        <script id="message" type="text/template">
+          <div class="message">
+            <div class="message__avatar">
+              <img class="avatar" src="" />
+            </div>
+            <div class="message__content">
+              <div class="content__head">
+                <a class="link head__name" target="_blanc" onclick="event.stopPropagation();"></a>
+                <span class="head__time"></span>
+                <div class="head__check"></div>
+              </div>
+            </div>
+          </div>
+        </script>
+
+        <script id="message-text" type="text/template">
+          <div class="content__text"></div>
+        </script>
+
+        <script id="message-preview" type="text/template">
+          <a class="link content__preview" target="_blanc" onclick="event.stopPropagation();">
+            <div class="preview__img"></div>
+            <div class="preview__body">
+              <div class="preview__head"></div>
+              <div class="preview__text"></div>
+            </div>
+          </a>
+        </script>
+    </head>
+
+    <body class="page">
+      <div class="dialog">
+        <div class="dialog__head">
+          <div class="dialog__avatar">
+            <img class="avatar" src="" />
+          </div>
+          <div class="dialog__name"></div>
+        </div>
+        <div class="dialog__body">
+          <noscript>
+            <button class="button-noscript">Показать еще</button>
+            </noscript>
+          </div>
+
+          <div class="dialog__footer">
+            <div class="dialog__input active">
+              <textarea class="input" type="text" placeholder="Ваше сообщение"></textarea>
+              <button class="button-sent" type="button"></button>
+            </div>
+            <div class="dialog__actions">
+              <div class="selected">Выбрано 2 сообщения</div>
+              <span class="close"></span>
+              <div class="actions">
+                <div class="action action-remove"></div>
+                <div class="action action-flagged"></div>
+                <div class="action">Ответить</div>
+                <div class="action">Переслать</div>
+                <div class="action">Спам</div>
+              </div>
+            </div>
+          </div>
+      <script type="text/javascript" src="script.js"></script>
+    </body>
+</html>
