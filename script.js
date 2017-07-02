@@ -9,7 +9,7 @@
     {
       id: 2,
       name: 'Константин Земцовский',
-      avatar: 'https://pp.userapi.com/c625825/v625825785/56ebd/CM7a4S8nV8A.jpg',
+      avatar: 'https://pp.userapi.com/c625825/v625825785/56ebf/XU8K2z6G5h8.jpg',
       profile: 'https://vk.com/imkost'
     }
   ];
@@ -108,7 +108,7 @@
 
     dialogTmp.querySelector('.avatar').src = currentUser.avatar;
     dialogTmp.querySelector('.dialog__name').innerHTML = currentUser.name;
-    dialogTmp.querySelector('.close').onclick = hideMessageActions;
+    dialogTmp.querySelector('.button-close').onclick = hideMessageActions;
     dialogTmp.querySelector('.button-sent').onclick = getCurrentMessage;
     document.body.appendChild(dialogTmp);
 
@@ -210,8 +210,8 @@
 
   function createDate() {
     var date = new Date;
-    var hours = date.getHours() < 9 ? '0' + date.getHours() : date.getHours();
-    var minutes = date.getMinutes() < 9 ? '0' + date.getMinutes() : date.getMinutes();
+    var hours = date.getHours() <= 9 ? '0' + date.getHours() : date.getHours();
+    var minutes = date.getMinutes() <= 9 ? '0' + date.getMinutes() : date.getMinutes();
 
     return (hours + ':' + minutes);
   }
@@ -233,6 +233,7 @@
         checked: false
       };
       sendMessage(message);
+      inputElem.focus();
     }
   }
 
@@ -240,7 +241,6 @@
     messages.push(message);
     viewMessage(message, chatUsers[1]);
     scrollToMessage(document.querySelector('.dialog__body').scrollHeight);
-    inputElem.focus();
   }
 
   function scrollToMessage(scrollY) {
