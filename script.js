@@ -123,7 +123,6 @@
 
   function initialization() {
     viewDialog();
-    scrollToMessage(document.body.scrollHeight);
   }
 
   function getTemplate(id) {
@@ -135,11 +134,14 @@
 
   function viewDialog() {
     var dialogTmp = document.querySelector('.dialog');
+    var avatarElem = dialogTmp.querySelector('.avatar');
 
-    dialogTmp.querySelector('.avatar').src = currentUser.avatar;
+    avatarElem.src = currentUser.avatar;
+    avatarElem.alt = currentUser.name;
     dialogTmp.querySelector('.dialog__name').innerHTML = currentUser.name;
     dialogTmp.querySelector('.button-close').onclick = hideMessageActions;
     dialogTmp.querySelector('.button-sent').onclick = getCurrentMessage;
+    dialogTmp.querySelector('.input').onkeyup = keyUpHandler;
     document.body.appendChild(dialogTmp);
 
     for(var i = messages.length - 11; i < messages.length; i++) {
@@ -150,11 +152,14 @@
 
   function viewMessage(message, user, insert) {
     var messageTmp = getTemplate('message');
+    var avatarElem = messageTmp.querySelector('.avatar');
+    var nameElem = messageTmp.querySelector('.head__name');
 
     messageTmp.setAttribute('data-id', message.id);
-    messageTmp.querySelector('.avatar').src = user.avatar;
-    messageTmp.querySelector('.head__name').innerHTML = user.name;
-    messageTmp.querySelector('.head__name').href = user.profile;
+    avatarElem.src = user.avatar;
+    avatarElem.alt = user.name;
+    nameElem.innerHTML = user.name;
+    nameElem.href = user.profile;
     messageTmp.querySelector('.head__time').innerHTML = message.time;
 
     var messageContentTmp;
@@ -163,6 +168,7 @@
       var previewInfo = message.previewInfo;
 
       messageContentTmp = getTemplate('message-preview');
+
       messageContentTmp.href = previewInfo.url;
       messageContentTmp.querySelector('.preview__img').style.backgroundImage = "url(" + previewInfo.img + ")";
       messageContentTmp.querySelector('.preview__text').innerHTML = previewInfo.hostname;
@@ -175,7 +181,7 @@
     }
 
     messageTmp.onclick = toggleSelectedMessage;
-    messageTmp.querySelector('.message__content').appendChild(messageContentTmp);
+    messageTmp.querySelector('.content').appendChild(messageContentTmp);
 
     if (insert) {
       document.querySelector('.dialog__body').insertBefore(messageTmp, document.querySelector('.dialog__body').firstChild);
@@ -251,6 +257,12 @@
     var minutes = date.getMinutes() <= 9 ? '0' + date.getMinutes() : date.getMinutes();
 
     return (hours + ':' + minutes);
+  }
+
+  function keyUpHandler(event) {
+    if(event.keyCode === 13) {
+      getCurrentMessage();
+    }
   }
 
   function getCurrentMessage() {
@@ -339,6 +351,12 @@
   	if (!isFixedSupported) {
   		document.body.className += ' no-fixed-supported';
   	}
+
+    setTimeout(function() {
+      var elem = document.querySelector('.dialog__body');
+      elem.classList.remove('dialog__body-fixed');
+      scrollToMessage(elem.scrollHeight);
+    }, 0);
   }
 
   window.onscroll = function() {
