@@ -17,7 +17,37 @@
   var currentUser = chatUsers[0];
 
   var messages = [
-    {
+  {
+    id: 90,
+    time: '22:09',
+    userId: 1,
+    text: 'What do I Treasure About My Child? (A Mom’s Answer)',
+    checked: false
+  }, {
+    id: 91,
+    time: '22:09',
+    userId: 2,
+    text: 'Nate wore his Spiderman costume tonight when we went out for dinner. His brother begged him not to, and even spent a few minutes trying to wrestle it off of him, but in the end Nate won the battle and we had Spiderman join us for dinner.',
+    checked: false
+  }, {
+    id: 92,
+    time: '00:19',
+    userId: 1,
+    text: 'What do I Treasure About My Child? (A Mom’s Answer)',
+    checked: false
+  }, {
+    id: 93,
+    time: '00:09',
+    userId: 2,
+    text: 'Nate wore his Spiderman costume tonight when we went out for dinner.',
+    checked: false
+  }, {
+    id: 94,
+    time: '01:09',
+    userId: 1,
+    text: 'Nate wore his Spiderman costume tonight when we went out for dinner. His brother begged him not to, and even spent a few minutes trying to wrestle it off of him, but in the end Nate won the battle and we had Spiderman join us for dinner.',
+    checked: false
+  },  {
       id: 95,
       time: '22:09',
       userId: 1,
@@ -77,7 +107,7 @@
       userId: 2,
       previewInfo: {
         img: 'https://cdn-images-1.medium.com/max/2000/1*CB21wNJSmh4ZuMeONJ7D4g.jpeg',
-        caption: 'Career Monogamy: The Awkward Tech Sin of Longevity',
+        caption: 'Career Monogamy: The Awkward Tech Sin of Longevity - Nemhouse',
         url: 'https://nemhouse.com/',
         hostname: 'nemhouse.com'
       },
@@ -112,7 +142,7 @@
     dialogTmp.querySelector('.button-sent').onclick = getCurrentMessage;
     document.body.appendChild(dialogTmp);
 
-    for(var i = messages.length - 5; i < messages.length; i++) {
+    for(var i = messages.length - 11; i < messages.length; i++) {
       var message = messages[i];
       viewMessage(message, getUser(chatUsers, messages[i].userId));
     }
@@ -154,16 +184,23 @@
     }
   }
 
+  function createTotalText(number) {
+    var titles = ['сообщение', 'сообщения', 'сообщений'];
+    number = Math.abs(number);
+    var cases = [2, 0, 1, 1, 1, 2];
+    var title = titles[ (number%100>4 && number%100<20)? 2 : cases[(number%10<5)?number%10:5] ];
+    return 'Выделено ' + number + ' ' + title;
+}
+
   function showMessageActions(selectedMessage) {
     var dialogActionsElem = document.querySelector('.dialog__actions');
     var dialogInputElem = document.querySelector('.dialog__input');
     var dialogElem = document.querySelector('.dialog');
 
-    dialogActionsElem.querySelector('.selected').innerHTML = 'Выделено сообщений ' + selectedMessage;
+    dialogActionsElem.querySelector('.selected').innerHTML = createTotalText(selectedMessage);
     dialogActionsElem.classList.add('active');
     dialogInputElem.classList.remove('active');
     dialogElem.classList.add('areSomeChecked');
-
   }
 
   function hideMessageActions() {
@@ -268,16 +305,10 @@
   }
 
   function fixedHeadAndFooter(scrolled) {
-    var head = document.querySelector('.dialog__head');
-    var footer = document.querySelector('.dialog__footer');
-    var footerHeight = document.querySelector('.dialog__footer').offsetHeight;
-    var headHeight = head.offsetHeight;
     var windowHeight = window.innerHeight;
-    var dialogHeight = document.querySelector('.dialog__body').scrollHeight;
+    var dialogHeight = document.querySelector('.dialog').scrollHeight;
   	head.style.top = scrolled + 'px';
-  	footer.style.bottom = dialogHeight - windowHeight + headHeight + footerHeight - scrolled + 'px';
-
-  //  scrollToMessage(0, scrolled -1);
+  	footer.style.bottom = dialogHeight - windowHeight - scrolled + 'px';
   }
 
   function fixedSupported() {
@@ -319,7 +350,8 @@
     if (scrolled < 100 && messagesOnPage < messages.length) {
       loadMessages(messagesOnPage);
 
-      var scrollY = document.body.scrollHeight - heightElem + scrolled;
+      var newHeightElem = document.body.scrollHeight;
+      var scrollY = newHeightElem - heightElem + scrolled;
       scrollToMessage(scrollY);
     }
 
