@@ -121,6 +121,20 @@
       }
   ];
 
+  var isFixedSupported = (function() {
+    var elem = document.createElement("div");
+    var body = document.body;
+
+    elem.style.position = "fixed";
+    elem.style.top = "10px";
+
+    body.appendChild(elem);
+    var isSupported = elem.offsetTop === 10;
+    body.removeChild(elem);
+
+    return isSupported;
+  })();
+
   function initialization() {
     viewDialog();
   }
@@ -323,30 +337,7 @@
   	footer.style.bottom = dialogHeight - windowHeight - scrolled + 'px';
   }
 
-  function fixedSupported() {
-    var isSupported = null;
-
-    if (document.createElement) {
-      var elem = document.createElement("div");
-
-      if (elem && elem.style) {
-        elem.style.position = "fixed";
-        elem.style.top = "10px";
-
-        var body = document.body;
-
-        if (body && body.appendChild && body.removeChild) {
-          body.appendChild(elem);
-          isSupported = elem.offsetTop === 10;
-          body.removeChild(elem);
-        }
-      }
-    }
-    return isSupported;
-  }
-
   window.onload = function() {
-    var isFixedSupported = fixedSupported();
 
   	if (!isFixedSupported) {
   		document.body.className += ' no-fixed-supported';
@@ -363,7 +354,6 @@
     var scrolled = window.pageYOffset || document.documentElement.scrollTop;
     var heightElem = document.body.scrollHeight;
     var messagesOnPage = document.querySelectorAll('.message').length;
-    var isFixedSupported = fixedSupported();
 
     if (scrolled < 100 && messagesOnPage < messages.length) {
       loadMessages(messagesOnPage);
