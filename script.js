@@ -139,6 +139,12 @@
     viewDialog();
   }
 
+  function scroll() {
+    var elem = document.querySelector('.dialog__body');
+    elem.classList.remove('dialog__body-fixed');
+    scrollToMessage(elem.scrollHeight);
+  }
+
   function getTemplate(id) {
     var messageTmpHtml = document.getElementById(id).innerHTML.trim();
     var tmp = document.createElement('div');
@@ -338,16 +344,9 @@
   }
 
   window.onload = function() {
-
   	if (!isFixedSupported) {
   		document.body.className += ' no-fixed-supported';
   	}
-
-    setTimeout(function() {
-      var elem = document.querySelector('.dialog__body');
-      elem.classList.remove('dialog__body-fixed');
-      scrollToMessage(elem.scrollHeight);
-    }, 0);
   }
 
   window.onscroll = function() {
@@ -369,5 +368,6 @@
   }
 
   initialization();
+  window.requestAnimationFrame(scroll);
 
 })();
